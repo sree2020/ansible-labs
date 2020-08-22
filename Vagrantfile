@@ -8,9 +8,9 @@
 
 Vagrant.configure("2") do |config|
   config.vm.define "control" do |control|
-    control.vm.box = "ubuntu/trusty64"
+    control.vm.box = "ubuntu/bionic64"
     control.vm.hostname = 'control'
-    control.vm.box = "ubuntu/trusty64"
+    control.vm.box = "ubuntu/bionic64"
 
     control.vm.network :private_network, ip: "192.168.35.1"
 
@@ -19,18 +19,21 @@ Vagrant.configure("2") do |config|
       v.customize ["modifyvm", :id, "--memory", 512]
       v.customize ["modifyvm", :id, "--name", "control"]
     end
+    control.vm.provision "file", source: "keys/key", destination: "~/.ssh/id_rsa"
+    control.vm.provision "shell", path: "lab-01/install-ansible.sh"
+    control.vm.provision "shell", path: "lab-02/disable-host-key-checking.sh"
   end
 
   config.vm.define "web1" do |web1|
-    web1.vm.box = "ubuntu/trusty64"
+    web1.vm.box = "ubuntu/bionic64"
     web1.vm.hostname = 'web1'
-    web1.vm.box = "ubuntu/trusty64"
+    web1.vm.box = "ubuntu/bionic64"
 
     web1.vm.network :private_network, ip: "192.168.35.101"
 
     web1.vm.provider :virtualbox do |v|
       v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
-      v.customize ["modifyvm", :id, "--memory", 256]
+      v.customize ["modifyvm", :id, "--memory", 512]
       v.customize ["modifyvm", :id, "--name", "web1"]
     end
 
@@ -40,15 +43,15 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.define "web2" do |web2|
-    web2.vm.box = "ubuntu/trusty64"
+    web2.vm.box = "ubuntu/bionic64"
     web2.vm.hostname = 'web2'
-    web2.vm.box = "ubuntu/trusty64"
+    web2.vm.box = "ubuntu/bionic64"
 
     web2.vm.network :private_network, ip: "192.168.35.102"
 
     web2.vm.provider :virtualbox do |v|
       v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
-      v.customize ["modifyvm", :id, "--memory", 256]
+      v.customize ["modifyvm", :id, "--memory", 512]
       v.customize ["modifyvm", :id, "--name", "web2"]
     end
 
@@ -58,15 +61,15 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.define "app" do |app|
-    app.vm.box = "ubuntu/trusty64"
+    app.vm.box = "ubuntu/bionic64"
     app.vm.hostname = 'app'
-    app.vm.box = "ubuntu/trusty64"
+    app.vm.box = "ubuntu/bionic64"
 
     app.vm.network :private_network, ip: "192.168.35.103"
 
     app.vm.provider :virtualbox do |v|
       v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
-      v.customize ["modifyvm", :id, "--memory", 256]
+      v.customize ["modifyvm", :id, "--memory", 512]
       v.customize ["modifyvm", :id, "--name", "app"]
     end
 
@@ -76,15 +79,15 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.define "db" do |db|
-    db.vm.box = "ubuntu/trusty64"
+    db.vm.box = "ubuntu/bionic64"
     db.vm.hostname = 'db'
-    db.vm.box = "ubuntu/trusty64"
+    db.vm.box = "ubuntu/bionic64"
 
     db.vm.network :private_network, ip: "192.168.35.104"
 
     db.vm.provider :virtualbox do |v|
       v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
-      v.customize ["modifyvm", :id, "--memory", 256]
+      v.customize ["modifyvm", :id, "--memory", 512]
       v.customize ["modifyvm", :id, "--name", "db"]
     end
 
