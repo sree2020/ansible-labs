@@ -6,6 +6,8 @@
 # backwards compatibility). Please don't change it unless you know what
 # you're doing.
 
+#Testing something
+
 Vagrant.configure("2") do |config|
   config.vm.define "control" do |control|
     control.vm.box = "ubuntu/bionic64"
